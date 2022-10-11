@@ -1,0 +1,80 @@
+I"6	(function() {
+  $(document).on('turbolinks:load', function() {
+    if ($('#tree-predefined,#tree-customized').length > 0) {
+      $('#tree-predefined,#tree-customized').fancytree({
+        extensions: ['glyph', 'table'],
+        escapeTitles: false,
+        autoScroll: true,
+        selectMode: 2,
+        checkbox: true,
+        icon: false,
+        glyph: {
+          preset: 'awesome5'
+        },
+        source: [
+          {
+            'title': 'FieldID',
+            'delete': '<button class="btn btn-secondary">Delete</button>'
+          }
+        ],
+        table: {
+          checkboxColumnIdx: 0,
+          nodeColumnIdx: 1
+        },
+        init: function(event, data) {
+          var comparer, getCellValue, node;
+          node = $('#tree-predefined').fancytree('getRootNode');
+          comparer = function(index) {
+            return function(a, b) {
+              var valA, valB;
+              valA = getCellValue(a, index);
+              valB = getCellValue(b, index);
+              if ($.isNumeric(valA) && $.isNumeric(valB)) {
+                return valA - valB;
+              } else {
+                return valA.toString().localeCompare(valB);
+              }
+            };
+          };
+          getCellValue = function(row, index) {
+            return $(row).children('td').eq(index).text();
+          };
+          return $('.sort').click(function() {
+            var i, rows, table;
+            $('th').removeClass('active');
+            table = $(this).parents('table').eq(0);
+            rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+            $(this).toggleClass('active');
+            $(this).toggleClass('sortDSC');
+            this.asc = !this.asc;
+            if (!this.asc) {
+              rows = rows.reverse();
+            }
+            i = 0;
+            while (i < rows.length) {
+              table.append(rows[i]);
+              i++;
+            }
+          });
+        },
+        renderColumns: function(event, data) {
+          var $tdList, node;
+          node = data.node;
+          $tdList = $(node.tr).find('>td');
+          $tdList.eq(2).html(node.data["delete"]);
+        }
+      });
+      return;
+    }
+    $('#metadataDataTable').DataTable({
+      columnDefs: [
+        {
+          targets: 'no-sort',
+          orderable: false
+        }
+      ]
+    });
+  });
+
+}).call(this);
+:ET

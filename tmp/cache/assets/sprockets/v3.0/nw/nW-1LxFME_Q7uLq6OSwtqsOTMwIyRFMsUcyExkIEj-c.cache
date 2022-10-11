@@ -1,0 +1,66 @@
+I"Ü(function() {
+  $(document).on('turbolinks:load', function() {
+    if ($('#tree').length > 0) {
+      $('#tree').fancytree({
+        extensions: ['glyph', 'table', 'dnd5'],
+        renderNode: function(event, data) {},
+        escapeTitles: false,
+        autoScroll: true,
+        selectMode: 2,
+        checkbox: true,
+        dnd5: {
+          preventVoidMoves: true,
+          preventRecursiveMoves: true,
+          autoExpandMS: 400,
+          dragStart: function(node, data) {
+            return true;
+          },
+          dragEnter: function(node, data) {
+            return true;
+          },
+          dragDrop: function(node, data) {
+            return data.otherNode.moveTo(node, data.hitMode);
+          }
+        },
+        glyph: {
+          preset: 'awesome5',
+          map: {
+            folder: 'fas fa-folder',
+            folderOpen: 'fas fa-folder-open'
+          }
+        },
+        table: {
+          checkboxColumnIdx: 0,
+          nodeColumnIdx: 2
+        },
+        init: function(event, data) {
+          data.tree.getRootNode().sortChildren(null, true);
+        },
+        select: function(event, data) {
+          var selNodes;
+          selNodes = data.tree.getSelectedNodes();
+          console.log(selNodes);
+          if (selNodes.length > 0) {
+            $('#folder-actions').addClass('d-block');
+          } else {
+            $('#folder-actions').removeClass('d-block');
+          }
+        },
+        renderColumns: function(event, data) {
+          var $tdList, node;
+          node = data.node;
+          $tdList = $(node.tr).find('>td');
+          $tdList.eq(1).html('<input id="star" type="checkbox"/><label for="star"></label>');
+          $tdList.eq(2).html(node.data.name);
+          $tdList.eq(3).text(node.data.size);
+          $tdList.eq(4).text(node.data.updated);
+          $tdList.eq(5).text(node.data.addedBy);
+          $tdList.eq(6).html(node.data.online);
+          $tdList.eq(7).html(node.data.archived);
+        }
+      });
+    }
+  });
+
+}).call(this);
+:ET

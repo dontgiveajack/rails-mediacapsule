@@ -1,0 +1,65 @@
+- current_folder_id = @current_folder.try(:id).present? ? @current_folder.try(:id) : 0
+
+.container-fluid
+  / Breadcrumbs
+  .welcome
+    %nav{"aria-label" => "breadcrumb"}
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          %a{:href => tenant_catalogue_path}
+            Catalogue
+        - upper_segments = @segments[0..-2]
+
+        - path_trail = ""
+        - upper_segments.each do |us|
+          - path_trail = "#{path_trail}/#{us}"
+          %li.breadcrumb-item
+            %a{:href => tenant_catalogue_browser_path(path: path_trail)}
+              = us
+        %li.breadcrumb-item.active{"aria-current" => "page"}
+          %i.fas.fa-fw.fa-folder-open.text-dark
+          = @current_folder.present? ? @current_folder.name : "/"
+  #panels.row.pt-5
+    .col-lg-7.mb-3
+      .embed-responsive.embed-responsive-16by9
+        %iframe.embed-responsive-item{:allowfullscreen => "", :src => "https://www.youtube.com/embed/F29OgzoesaM?rel=0"}
+    .col-lg-5.mb-3
+      .table-responsive
+        %table#dataTable.table.table-bordered.table-striped{:cellspacing => "0", :width => "100%"}
+          %tbody
+            %tr
+              %th{"scope" => "row"} Current Status
+              %td 
+                %i.fas.fa-fw.fa-circle.text-primary
+                Online 
+                %i.fas.fa-fw.fa-circle.text-muted
+                Archived
+            %tr
+              %th{"scope" => "row"} FileID
+              %td 1000232
+            %tr
+              %th{"scope" => "row"} Running Time
+              %td 03:54:00
+            %tr
+              %th{"scope" => "row"} Comments
+              %td Great Clip
+            %tr
+              %th{"scope" => "row"} Title
+              %td
+            %tr
+              %th{"scope" => "row"} Company
+              %td
+            %tr
+              %th{"scope" => "row"} Production Company
+              %td
+            %tr
+              %th{"scope" => "row"} Video Thumbnail
+              %td 
+                JPG (67.4KB) - 
+                %a{:href => "#"} Delete Thumbnail
+            %tr
+              %th{"scope" => "row"} Proxy Video
+              %td
+                MP4 and WEBM (57.2MB) - 
+                %a{:href => "#"} Delete Proxies                                                                                   
+/ /.container-fluid

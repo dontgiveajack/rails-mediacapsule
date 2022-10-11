@@ -1,0 +1,42 @@
+<% page_title = "Move items" %>
+<% resource = @resource %>
+
+$('#media-capsule-modal').html('<%= escape_javascript(render('move_form', page_title: page_title)) %>');
+$('#media-capsule-modal').modal('show');
+
+$('#move-tree').fancytree({
+  extensions: ['glyph'],
+  renderNode: function(event, data) {},
+  escapeTitles: false,
+  autoScroll: true,
+  selectMode: 1,
+  checkbox: true,
+  glyph: {
+    preset: 'awesome5',
+    map: {
+      folder: 'fas fa-folder',
+      folderOpen: 'fas fa-folder-open'
+    }
+  },
+  source: {
+    url: "/nodes.json?parent_id=" + "&filter=folders&with_root=true&with_children=true"
+  },
+  init: function(event, data) {
+    data.tree.getRootNode().sortChildren(null, true);
+  },
+  select: function(event, data) {
+    var selNodes;
+    selNodes = data.tree.getSelectedNodes();
+    console.log(selNodes);
+
+    if (selNodes.length > 0 && !<%= @folders.pluck(:id).to_json.html_safe %>.includes(selNodes[0].data.resource_id)) {
+      // make the move button enabled and add the hidden field tag
+      $('.modal-form .modal-footer button.btn-primary').removeAttr('disabled')
+
+      $('.modal-form .modal-body').append($('<input type="hidden" name="container_id" value="' + data.node.data.resource_id + '" id="new-parent-folder" />'));
+    } else {
+      $('.modal-form .modal-footer button.btn-primary').attr('disabled', true);
+      $('.modal-form .modal-body #new-parent-folder').remove();    
+    }
+  }
+});

@@ -1,0 +1,31 @@
+.container
+  .card.card-login.mx-auto.mt-5
+    .card-header Reset Password
+    .card-body
+      .text-center.mb-4
+        %h4 Forgot your password?
+        %p Enter your email address and we will send you instructions on how to reset your password.
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+        .form-group
+          .form-label-group
+            -# %input#inputEmail.form-control{:autofocus => "autofocus", :placeholder => "Enter email address", :required => "required", :type => "email"}/
+            -# %label{:for => "inputEmail"} Enter email address
+            = f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email", placeholder: 'Enter email address', required: true
+            = f.label :email
+
+        -# %a.btn.btn-primary.btn-block{:href => "login.html"} Reset Password
+        = f.submit "Send me reset password instructions", class: 'btn btn-primary btn-block'
+      
+      = render "devise/shared/links"
+
+
+-# %h2 Forgot your password?
+-# = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+-#   = devise_error_messages!
+-#   .field
+-#     = f.label :email
+-#     %br/
+-#     = f.email_field :email, autofocus: true, autocomplete: "email"
+-#   .actions
+-#     = f.submit "Send me reset password instructions"
+-# = render "devise/shared/links"

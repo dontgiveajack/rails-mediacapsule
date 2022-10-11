@@ -1,0 +1,7 @@
+I"{(function() {
+  $(document).on('turbolinks:load', function() {
+    $('#dataTable').DataTable();
+  });
+
+}).call(this);
+:ET

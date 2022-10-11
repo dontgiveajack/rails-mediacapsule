@@ -1,0 +1,103 @@
+.container-fluid
+  / Breadcrumbs
+  .welcome
+    %nav{"aria-label" => "breadcrumb"}
+      %ol.breadcrumb
+        %li.breadcrumb-item Dashboard
+        %li.breadcrumb-item.active Welcome back, #{current_user.first_name}
+  / Icon Cards
+  #panels.row.pt-5
+    .col-lg-6.mb-3
+      .card.o-hidden.h-100
+        .card-header
+          Current Usage
+        .card-body
+          .row
+            .col-sm-6
+              Online Storage #{number_to_human_size(@used_storage)} / 100GB
+              %div#onlineStorage{:height => "100", :width => "100%"}
+                - used_percentage = (@used_storage / 100.gigabytes) * 100.0
+                = pie_chart({"Available" => 100 - used_percentage, "Used" => used_percentage}, donut: true, library: { backgroundColor: ['#007bff', '#ececec'] })
+            .col-sm-6
+              Archive Storage 0TB/ 30TB
+              %div#archiveStorage{:height => "100", :width => "100%"}
+                = pie_chart({"Available" => 100, "Used" => 0}, donut: true, library: { backgroundColor: ['#dc3545', '#ececec'] })
+    .col-lg-6.mb-3
+      .card.o-hidden.h-100
+        .card-header
+          Shortcuts
+        #shortcuts.card-body
+          .row
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_in_development_path}
+                %i.fas.fa-share.fa-fw.2x.mb-2
+              = succeed "Share Files" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_in_development_path}
+                %i.fas.fa-hdd.fa-fw.2x.mb-2
+              = succeed "CapsulePOD" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_in_development_path}
+                %i.fas.fa-user-plus.fa-fw.2x.mb-2
+              = succeed "Create New User" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_settings_path}
+                %i.fas.fa-cogs.fa-fw.2x.mb-2
+              = succeed "Account Settings" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_catalogue_path}
+                %i.fas.fa-user.fa-fw.2x.mb-2
+              = succeed "Personal Folders" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_in_development_path}
+                %i.fas.fa-users.fa-fw.2x.mb-2
+              = succeed "Shared FOlders" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_catalogue_favourites_path}
+                %i.fas.fa-star.fa-fw.2x.mb-2
+              = succeed "Favourites" do
+                %br/
+            .col-6.col-md-4.col-lg-3.text-center.mb-3
+              %a.btn.btn-outline-dark.btn-circle{:href => tenant_in_development_path}
+                %i.fas.fa-inbox.fa-fw.2x.mb-2
+              = succeed "Inbox" do
+                %br/                                                                
+    .col-lg-6.mb-3
+      .card.o-hidden.h-100
+        .card-header
+          %i.fas.fa-table
+          Recent Activity
+        .card-body
+          -# .table-responsive
+          -#   %table#dataTable.table.table-bordered{:cellspacing => "0", :width => "100%"}
+          -#     %thead
+          -#       %tr
+          -#         %th File Name
+          -#         %th Activity
+          -#     %tfoot
+          -#       %tr
+          -#         %th File Name
+          -#         %th Activity
+          -#     %tbody
+          -#       %tr
+          -#         %td File 1
+          -#         %td Archived
+          -#       %tr
+          -#         %td File 2
+          -#         %td Archived
+          -#       %tr
+          -#         %td File 3
+          -#         %td Restored
+    .col-lg-6.mb-3
+      .card.o-hidden.h-100
+        .card-header
+          Tutorials
+        .card-body
+  / /.row
+/ /.container-fluid

@@ -1,0 +1,297 @@
+.container-fluid
+  / Breadcrumbs
+  .welcome
+    %nav{"aria-label" => "breadcrumb"}
+      %ol.breadcrumb
+        %li.breadcrumb-item Settings
+        %li.breadcrumb-item.active Welcome back, #{current_user.first_name}
+  / Icon Cards
+  #panels.row.pt-5.px-3
+    %nav.settings
+      #nav-tab.nav.nav-tabs{:role => "tablist"}
+        %a#nav-general-tab.nav-item.nav-link.active{"aria-controls" => "general", "aria-selected" => "true", "data-toggle" => "tab", :href => "#general", :role => "tab"} General
+        %a#nav-notifications-tab.nav-item.nav-link{"aria-controls" => "notifications", "aria-selected" => "false", "data-toggle" => "tab", :href => "#notifications", :role => "tab"} Notifications
+        %a#nav-customization-tab.nav-item.nav-link{"aria-controls" => "customization", "aria-selected" => "false", "data-toggle" => "tab", :href => "#customization", :role => "tab"} Customization
+        -# %a#nav-capsule-tab.nav-item.nav-link{"aria-controls" => "capsule", "aria-selected" => "false", "data-toggle" => "tab", :href => "#capsule", :role => "tab"} Capsule Pod
+        -# %a#nav-filecatalyst-tab.nav-item.nav-link{"aria-controls" => "filecatalyst", "aria-selected" => "false", "data-toggle" => "tab", :href => "#filecatalyst", :role => "tab"} FileCatalyst        
+      #nav-tabContent.tab-content
+        #general.tab-pane.fade.show.active{"aria-labelledby" => "nav-general-tab", :role => "tabpanel"}
+          = form_for(resource, as: :user, url: account_update_path, html: { method: :put }) do |f|
+            = devise_error_messages!
+
+            %h2.heading User Settings
+            .form-group
+              .form-row
+                .col-md-6
+                  -# %label{:for => "firstName"} First Name
+                  -# %input#firstName.form-control{:placeholder => "First Name", :type => "text"}/
+                  = f.label :first_name
+                  = f.text_field :first_name, class: 'form-control', autofocus: true, placeholder: 'First Name', required: false
+                .col-md-6
+                  -# %label{:for => "lastName"} Last Name
+                  -# %input#lastName.form-control{:placeholder => "Last Name", :type => "text"}/
+                  = f.label :last_name
+                  = f.text_field :last_name, class: 'form-control', autofocus: true, placeholder: 'First Name', required: true
+            .form-group
+              = f.fields_for :company do |cf|
+                .form-row
+                  .col-md-6
+                    = cf.label :company_name, 'Company'
+                    = cf.text_field :company_name, class: 'form-control', placeholder: 'Company', required: true
+                  .col-md-6
+                    = cf.label :subdomain
+                    = cf.text_field :subdomain, class: 'form-control', placeholder: 'Subdomain', required: true, disabled: true
+                      
+              -# .form-row
+              -#   .col-md-6
+              -#     %label{:for => "CompanyName"} Company
+              -#     %input#CompanyName.form-control{:placeholder => "Company", :type => "text"}/
+              -#   .col-md-6
+              -#     %label{:for => "subdomain"} Sub Domain
+              -#     %input#subdomain.form-control{:placeholder => "Sub Domain",:disabled => "disabled", :type => "text"}/                
+            .form-group
+              = f.label :email
+              = f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email", placeholder: 'Email Address', required: true
+              -# %label{:for => "email"} Email Address (for login and notifications)
+              -# %input#email.form-control{:placeholder => "Email Address", :type => "email"}/
+            .form-group
+              = f.label :current_password, "Current Password (only needed to change your password)"
+              = f.password_field :current_password, class: 'form-control', placeholder: 'Current Password', autocomplete: "new-password", required: false
+            .form-group
+              .form-row
+                .col-md-6
+                  = f.label :password, "New Password"
+                  = f.password_field :password, class: 'form-control', placeholder: 'New Password', required: false
+                  -# %label{:for => "inputPassword"} New Password              
+                  -# %input#inputPassword.form-control{:placeholder => "New Password", :required => "required", :type => "password"}/
+                .col-md-6
+                  = f.label :password_confirmation, "Confirm Password"
+                  = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm Password', required: false
+                  -# %label{:for => "confirmPassword"} Confirm password              
+                  -# %input#confirmPassword.form-control{:placeholder => "Confirm password", :required => "required", :type => "password"}/
+                - if @minimum_password_length
+                  .col-md-12
+                    %em
+                      (#{@minimum_password_length} characters minimum)
+
+
+
+            %hr.my-5           
+            %h2.heading Video Settings                    
+            .form-check
+              %input#createProxy.form-check-input{:type => "checkbox", :value => ""}/
+              %label.form-check-label{:for => "createProxy"}
+                Create proxy of uploaded videos
+            .form-check              
+              %input#createThumb.form-check-input{:type => "checkbox", :value => ""}/
+              %label.form-check-label{:for => "createThumb"}
+                Create thumbnail uploaded videos
+            .form-check.mb-3              
+              %input#extractMeta.form-check-input{:type => "checkbox", :value => ""}/
+              %label.form-check-label{:for => "extractMeta"}
+                Extract Meta Data for uploaded videos
+            %a.btn.btn-secondary.mb-2{:href => "#"} Delete all Thumbnails 
+            %a.btn.btn-secondary.mb-2{:href => "#"} Delete all Proxies                           
+            %hr.my-5
+              = f.submit "Confirm Changes", class: 'btn btn-primary btn-lg mb-5'
+              -# %a.btn.btn-primary.btn-lg.mb-5{:href => "#"} Confirm Changes     
+
+        #notifications.tab-pane.fade{"aria-labelledby" => "nav-notifications-tab", :role => "tabpanel"}
+          %h2.heading Send me emails when                   
+          .form-check
+            %input#archivesComplete.form-check-input{:type => "checkbox", :value => ""}/
+            %label.form-check-label{:for => "archivesComplete"}
+              Archives are completed
+          .form-check              
+            %input#restoresComplete.form-check-input{:type => "checkbox", :value => ""}/
+            %label.form-check-label{:for => "restoresComplete"}
+              Restores are completed
+          %hr.my-5
+            %a.btn.btn-primary.btn-lg.mb-5{:href => "#"} Confirm Changes
+        #customization.tab-pane.fade{"aria-labelledby" => "nav-customization-tab", :role => "tabpanel"}
+          = form_for(ActsAsTenant.current_tenant, as: :settings, url: tenant_settings_update_path, html: { method: :patch }) do |f|
+            .table.mt-5
+              %table#tree-predefined.table.table-hover.table-striped.fancytree-fade-expander
+                %colgroup
+                  %col{:width => "10px"}/
+                  %col{:width => "*"}/
+                %thead
+                  %tr
+                    %th            
+                    %th.sort Predefined Meta Data Fields
+                %tbody
+                  %tr
+                    %td.cell
+                    %td.cell
+            .table.mt-5
+              %table#tree-customized.table.table-hover.table-striped.fancytree-fade-expander
+                %colgroup
+                  %col{:width => "10px"}/
+                  %col{:width => "*"}/
+                  %col{:width => "*"}/
+                  %col{:width => "*"}/
+                %thead
+                  %tr
+                    %th            
+                    %th.sort Customized Meta Data Fields
+                    %th
+                      %a.add-new-field-btn{:href => "#"}
+                        + Add New
+                    %th
+                      %a.delete-fields-btn.d-none{:href => "#"}
+                        Delete
+                %tbody
+                  %tr
+                    %td.cell
+                    %td.cell
+                    %td.cell
+                    %td.cell                                    
+            %hr.my-5
+              = f.submit "Confirm Changes", name: 'commit_metadata_fields', class: 'btn btn-primary btn-lg mb-5'                  
+        -# #capsule.tab-pane.fade{"aria-labelledby" => "nav-capsule-tab", :role => "tabpanel"}
+        -#   %h2.heading FileCatalyst Integration
+        -#   .form-group
+        -#     %label{:for => "userName"} FileCatalyst Username
+        -#     %input#userName.form-control{:placeholder => "Username", :type => "text"}/
+        -#   .form-group
+        -#     %label{:for => "password"} Password
+        -#     %input#password.form-control{:placeholder => "Password", :type => "password"}/  
+        -#   %hr.my-5                    
+        -#   %h2.heading Data Handling  
+        -#   %p Select default data handling for income data using the CapsulePOD                
+        -#   .form-check
+        -#     %input#archive.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "archive"}
+        -#       Archive
+        -#   .form-check              
+        -#     %input#onlineStorage.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "onlineStorage"}
+        -#       Online Storage
+        -#   %p 
+        -#     Incoming Data goes directly to: 
+        -#     %strong Catalogue/Inbox    
+        -#   %hr.my-5
+        -#   %h2.heading Video Settings                  
+        -#   .form-check
+        -#     %input#proxy.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "proxy"}
+        -#       Create proxy of uploaded videos
+        -#   .form-check              
+        -#     %input#thumbnail.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "thumbnail"}
+        -#       Create thumbnail of uploaded videos
+        -#   %hr.my-5
+        -#   %h2.heading Meta Data Mapping
+        -#   .table-responsive
+        -#     %table#metadataDataTable.table{:cellspacing => "0", :width => "100%"}
+        -#       %thead
+        -#         %tr
+        -#           %th Input File (XLS, CSV)
+        -#           %th MediaCapsule Meta Data Fields
+        -#           %th.no-sort
+        -#           %th.no-sort
+        -#       %tfoot
+        -#         %tr
+        -#           %th Input File (XLS, CSV)
+        -#           %th MediaCapsule Meta Data Fields
+        -#           %th.no-sort
+        -#           %th.no-sort
+        -#       %tbody
+        -#         %tr
+        -#           %td Title
+        -#           %td Title
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete
+        -#         %tr
+        -#           %td Total Time
+        -#           %td Running Time
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete
+        -#         %tr
+        -#           %td Company
+        -#           %td Company
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete              
+        -#   %hr.my-5          
+        -#     %a.btn.btn-primary.btn-lg.mb-5{:href => "#"} Confirm Changes        
+        -# #filecatalyst.tab-pane.fade{"aria-labelledby" => "nav-filecatalyst-tab", :role => "tabpanel"}
+        -#   %h2.heading FileCatalyst Integration
+        -#   .form-group
+        -#     %label{:for => "fileCatalystUserName"} FileCatalyst Username
+        -#     %input#fileCatalystUserName.form-control{:placeholder => "Username", :type => "text"}/
+        -#   .form-group
+        -#     %label{:for => "fileCatalystPassword"} Password
+        -#     %input#fileCatalystPassword.form-control{:placeholder => "Password", :type => "password"}/  
+        -#   %hr.my-5                    
+        -#   %h2.heading Data Handling  
+        -#   %p Select default data handling for income data using the CapsulePOD                
+        -#   .form-check
+        -#     %input#archive.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "archive"}
+        -#       Archive
+        -#   .form-check              
+        -#     %input#onlineStorage.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "onlineStorage"}
+        -#       Online Storage
+        -#   %p 
+        -#     Incoming Data goes directly to: 
+        -#     %strong Catalogue/Inbox    
+        -#   %hr.my-5
+        -#   %h2.heading Video Settings                  
+        -#   .form-check
+        -#     %input#proxy.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "proxy"}
+        -#       Create proxy of uploaded videos
+        -#   .form-check              
+        -#     %input#thumbnail.form-check-input{:type => "checkbox", :value => ""}/
+        -#     %label.form-check-label{:for => "thumbnail"}
+        -#       Create thumbnail of uploaded videos
+        -#   %hr.my-5
+        -#   %h2.heading Meta Data Mapping
+        -#   .table-responsive
+        -#     %table#dataTable.table{:cellspacing => "0", :width => "100%"}
+        -#       %thead
+        -#         %tr
+        -#           %th Input File (XLS, CSV)
+        -#           %th MediaCapsule Meta Data Fields
+        -#           %th.no-sort
+        -#           %th.no-sort
+        -#       %tfoot
+        -#         %tr
+        -#           %th Input File (XLS, CSV)
+        -#           %th MediaCapsule Meta Data Fields
+        -#           %th.no-sort
+        -#           %th.no-sort
+        -#       %tbody
+        -#         %tr
+        -#           %td Title
+        -#           %td Title
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete
+        -#         %tr
+        -#           %td Total Time
+        -#           %td Running Time
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete
+        -#         %tr
+        -#           %td Company
+        -#           %td Company
+        -#           %td 
+        -#             %a{:href => "#"} Edit
+        -#           %td
+        -#             %a{:href => "#"} Delete
+             
+        -#   %hr.my-5
+        -#     %a.btn.btn-primary.btn-lg.mb-5{:href => "#"} Confirm Changes               
+  / /.row
+/ /.container-fluid

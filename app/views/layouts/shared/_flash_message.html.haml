@@ -1,0 +1,13 @@
+- if alert.present?
+  .alert.alert-dismissable.alert-danger
+    -logger.debug("flash alert=#{alert}") unless Rails.env.production?
+    = alert
+    %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+      %span{"aria-hidden" => "true"} &#215;
+
+- if notice.present?
+  .alert.alert-dismissable.alert-success
+    -logger.debug("flash notice=#{notice}") unless Rails.env.production?
+    = notice
+    %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+      %span{"aria-hidden" => "true"} &#215;

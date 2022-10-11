@@ -1,0 +1,26 @@
+.container
+  .card.card-login.mx-auto.mt-5
+    .card-header Change Your Password
+    .card-body
+      .text-center.mb-4
+        %h4 Enter a new password.
+        %p Create a new password.
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+        = devise_error_messages!
+        = f.hidden_field :reset_password_token
+        .form-group
+          .form-label-group
+            = f.password_field :password, class: 'form-control', autofocus: true, autocomplete: "new-password", required: true, placeholder: "New Password"
+            = f.label :password, "New password"
+            %br/
+            - if @minimum_password_length
+              %em
+                (#{@minimum_password_length} characters minimum)
+              %br/
+        .form-group
+          .form-label-group
+            = f.password_field :password_confirmation, class: 'form-control', autocomplete: "off", placeholder: "Confirm New Password", required: true
+            = f.label :password_confirmation, "Confirm new password"
+
+        = f.submit "Change my password", class: 'btn btn-primary btn-block'
+      = render "devise/shared/links"

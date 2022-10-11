@@ -1,0 +1,5 @@
+<% page_title = "Add a New #{@resource.respond_to?(:display_name) ? @resource.display_name : @resource.class.model_name.human}" %>
+
+$('#media-capsule-modal').html('<%= escape_javascript(render('modal_form', page_title: page_title, resource: @resource)) %>');
+$('#media-capsule-modal').modal('show');
+

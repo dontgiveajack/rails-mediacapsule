@@ -1,0 +1,32 @@
+<label class="asdndzone" id="asdndz-<%= form.object_name %>_<%= method %>" data-dnd-input-id="<%= form.object_name %>_<%= method %>">
+  <i class="fas fa-sign-in-alt fa-rotate-90 fa-7x"></i>
+  <%# tag_value %>
+  <h3 class="mt-3">
+    <span class="text-primary">Choose a File</span> or drag it here
+  </h3>
+  <p class="mt-5">NOTE: For Files larger than 200MB, you should use our dedicated file <a href="#">upload agent</a></p>
+
+  <div id="asdndz-<%= form.object_name %>_<%= method %>__icon-container"></div>
+  <%= form.file_field method,
+    multiple: false,
+    direct_upload: true,
+    style: 'display:none;',
+    data: {
+      dnd: true,
+      dnd_zone_id: "asdndz-#{form.object_name}_#{method}",
+      icon_container_id: "asdndz-#{form.object_name}_#{method}__icon-container"
+    } %>
+
+  <% if attachments.attachment.present? %>
+    <% attachments.each_with_index do |blob,idx| %>
+      <%= form.hidden_field method,
+        value: blob.signed_id,
+        :multiple => true,
+        data: {
+          direct_upload_id: idx,
+          uploaded_file_name: blob.filename,
+          icon_container_id: "asdndz-#{form.object_name}_#{method}__icon-container"
+        } %>
+    <% end %>
+  <% end %>
+</label>

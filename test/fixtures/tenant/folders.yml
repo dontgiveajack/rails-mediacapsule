@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: tenant_folders
+#
+#  id             :bigint(8)        not null, primary key
+#  name           :string
+#  ancestry       :string
+#  tenant_id      :bigint(8)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  creator_id     :bigint(8)
+#  folder_size    :bigint(8)        default(0)
+#  ancestry_depth :integer          default(0)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  ancestry: MyString
+  tenant: one
+
+two:
+  name: MyString
+  ancestry: MyString
+  tenant: two

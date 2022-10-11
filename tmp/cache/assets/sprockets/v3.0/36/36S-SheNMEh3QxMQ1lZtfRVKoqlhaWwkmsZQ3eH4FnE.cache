@@ -1,0 +1,87 @@
+I"¸(function() {
+  $(document).on('turbolinks:load', function() {});
+
+  $('#metadataDataTable').DataTable({
+    columnDefs: [
+      {
+        targets: 'no-sort',
+        orderable: false
+      }
+    ]
+  });
+
+  return;
+
+  if ($('#tree-settings')) {
+    $('#tree-settings').fancytree({
+      extensions: ['glyph', 'table'],
+      escapeTitles: false,
+      autoScroll: true,
+      selectMode: 2,
+      checkbox: true,
+      glyph: {
+        preset: 'awesome5',
+        map: {
+          folder: 'fas fa-folder',
+          folderOpen: 'fas fa-folder-open'
+        }
+      },
+      source: [
+        {
+          'title': 'Moto G',
+          'folder': true,
+          'name': 'name'
+        }
+      ],
+      table: {
+        checkboxColumnIdx: 0,
+        nodeColumnIdx: 1
+      },
+      init: function(event, data) {
+        var comparer, getCellValue, node;
+        node = $('#tree-settings').fancytree('getRootNode');
+        comparer = function(index) {
+          return function(a, b) {
+            var valA, valB;
+            valA = getCellValue(a, index);
+            valB = getCellValue(b, index);
+            if ($.isNumeric(valA) && $.isNumeric(valB)) {
+              return valA - valB;
+            } else {
+              return valA.toString().localeCompare(valB);
+            }
+          };
+        };
+        getCellValue = function(row, index) {
+          return $(row).children('td').eq(index).text();
+        };
+        return $('.sort').click(function() {
+          var i, rows, table;
+          $('th').removeClass('active');
+          table = $(this).parents('table').eq(0);
+          rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+          $(this).toggleClass('active');
+          $(this).toggleClass('sortDSC');
+          this.asc = !this.asc;
+          if (!this.asc) {
+            rows = rows.reverse();
+          }
+          i = 0;
+          while (i < rows.length) {
+            table.append(rows[i]);
+            i++;
+          }
+        });
+      },
+      renderColumns: function(event, data) {
+        var $tdList, node;
+        node = data.node;
+        $tdList = $(node.tr).find('>td');
+        $tdList.eq(0).text(node.getIndexHier());
+      }
+    });
+    return;
+  }
+
+}).call(this);
+:ET

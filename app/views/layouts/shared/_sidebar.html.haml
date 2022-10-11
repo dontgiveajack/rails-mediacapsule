@@ -1,0 +1,53 @@
+/ Sidebar
+%ul.sidebar.navbar-nav
+  = active_link_to tenant_root_path, active: :exact, wrap_tag: :li, wrap_class: 'nav-item', class: 'nav-link' do
+    %i.fas.fa-fw.fa-tachometer-alt
+    %span Dashboard
+
+  -# %li.nav-item.active
+  -#   %a.nav-link{:href => "index.html"}
+  -#     %i.fas.fa-fw.fa-tachometer-alt
+  -#     %span Dashboard
+  %li.nav-item.dropdown{class: (controller_name == "catalogue" ? "active" : false)}
+    %a#pagesDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => '#', :role => "button"}
+      %i.fas.fa-fw.fa-folder
+      %span Catalogue
+    .dropdown-menu{"aria-labelledby" => "pagesDropdown"}
+      %a.dropdown-item{:href => tenant_catalogue_path}
+        %i.fas.fa-user.fa-fw
+        Personal Folders
+      %a.dropdown-item{:href => tenant_in_development_path}
+        %i.fas.fa-share.fa-fw
+        Shared with Me
+      %a.dropdown-item{:href => tenant_in_development_path}
+        %i.fas.fa-share-alt.fa-fw
+        Shared with Others        
+      %a.dropdown-item{:href => tenant_catalogue_favourites_path}
+        %i.fas.fa-star.fa-fw
+        Favorites
+      .dropdown-divider
+      %a.dropdown-item{:href => tenant_in_development_path}
+        %i.fas.fa-inbox.fa-fw
+        Inbox
+  %li.nav-item
+    %a.nav-link{:href => tenant_screening_room_path}
+      %i.fas.fa-fw.fa-film
+      %span Screening Room
+  %li.nav-item
+    %a.nav-link{:href => tenant_in_development_path}
+      %i.fas.fa-fw.fa-user-friends
+      %span People
+  %li.nav-item.dropdown
+    %a#InboxDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+      %i.fas.fa-fw.fa-envelope
+      %span Messages
+      -# .badge.badge-primary.badge-pill 1      
+    .dropdown-menu{"aria-labelledby" => "InboxDropdown"}
+      %a.dropdown-item{:href => tenant_in_development_path} Action
+      %a.dropdown-item{:href => tenant_in_development_path} Another action
+      .dropdown-divider
+      %a.dropdown-item{:href => tenant_in_development_path} Something else here
+  %li.nav-item
+    %a.nav-link{:href => tenant_in_development_path}
+      %i.fas.fa-fw.fa-hdd
+      %span CapsulePOD      

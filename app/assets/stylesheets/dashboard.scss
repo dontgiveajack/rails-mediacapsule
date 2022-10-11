@@ -1,0 +1,30 @@
+// Place all the styles related to the dashboard controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#shortcuts{
+  font-size:.7rem;
+  .btn-circle {
+    width: 70px;
+    height: 70px;
+    padding: 19px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+    margin-bottom:5px;
+    border-color:#ccc;
+    &:hover{
+      background-color:#ebebeb;
+      border-color:#adadad;
+      color:#333;
+    }
+  }
+}
+
+.welcome{
+  padding:1rem 0;
+  color:$gray-600;
+  h5{
+    margin-bottom:0;
+  }  
+}

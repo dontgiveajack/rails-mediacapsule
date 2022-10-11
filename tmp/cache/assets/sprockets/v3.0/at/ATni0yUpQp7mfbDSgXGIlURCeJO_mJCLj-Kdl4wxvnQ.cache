@@ -1,0 +1,14 @@
+I"æ(function() {
+  $(document).on('turbolinks:load', function() {
+    $('#dataTable').DataTable({
+      columnDefs: [
+        {
+          targets: 'no-sort',
+          orderable: false
+        }
+      ]
+    });
+  });
+
+}).call(this);
+:ET

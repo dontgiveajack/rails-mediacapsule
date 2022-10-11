@@ -1,0 +1,55 @@
+.container
+  .card.card-login.mx-auto.mt-5
+    .card-header Login
+    .card-body
+      %p.notice= notice
+      %p.alert= alert
+      
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-group
+          .form-label-group
+            -# %input#inputEmail.form-control{:autofocus => "autofocus", :placeholder => "Email address", :required => "required", :type => "email"}/
+            -# %label{:for => "inputEmail"} Email address
+
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', autofocus: true, required: true, placeholder: "john@emails.com"
+            = f.label :email
+        .form-group
+          .form-label-group
+            -# %input#inputPassword.form-control{:placeholder => "Password", :required => "required", :type => "password"}/
+            -# %label{:for => "inputPassword"} Password
+
+            = f.password_field :password, autocomplete: "current-password", class: 'form-control', required: true, placeholder: "Password"
+            = f.label :password
+        - if devise_mapping.rememberable?
+          .form-group
+            .checkbox
+              %label
+                = f.check_box :remember_me
+                Remember Me
+        -# %a.btn.btn-primary.btn-block{:href => "index.html"} Login
+        = f.submit "Log in", class: 'btn btn-primary btn-block'
+
+      = render "devise/shared/links"
+      -# .text-center
+      -#   %a.d-block.small.mt-3{:href => "register.html"} Register an Account
+      -#   %a.d-block.small{:href => "forgot-password.html"} Forgot Password?
+
+
+
+-# %h2 Log in
+-# = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+-#   .field
+-#     = f.label :email
+-#     %br/
+-#     = f.email_field :email, autofocus: true, autocomplete: "email"
+-#   .field
+-#     = f.label :password
+-#     %br/
+-#     = f.password_field :password, autocomplete: "current-password"
+-#   - if devise_mapping.rememberable?
+-#     .field
+-#       = f.check_box :remember_me
+-#       = f.label :remember_me
+-#   .actions
+-#     = f.submit "Log in"
+-# = render "devise/shared/links"

@@ -1,0 +1,26 @@
+-if resource.respond_to? :errors
+  - if resource.errors.any?
+    .alert.alert-danger
+      %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'alert', type: 'button'} &times;
+      = pluralize(resource.errors.count, 'error')
+      prohibited this record from being saved:
+      -logger.debug("error notice=#{resource.errors.full_messages.inspect}") unless Rails.env.production?
+      %ul
+        - resource.errors.messages.each do |field,msgs|
+          -key=field.to_s.split('.')
+          -if key.count==1
+            -key=key[0]
+          -else
+            -key=key[1]
+          -key='' if key=='base'
+          -if msgs.count==1
+            -if key==''
+              %li= "#{msgs[0]}".humanize
+            -else
+              %li= "#{key} #{msgs[0]}".humanize
+          -else
+            %li
+              ="#{key}:".humanize
+              %ul
+                -msgs.each do |msg|
+                  %li="#{msg}".humanize

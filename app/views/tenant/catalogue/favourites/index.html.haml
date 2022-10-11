@@ -1,0 +1,144 @@
+- current_folder_id = @current_folder.try(:id).present? ? @current_folder.try(:id) : 0
+
+.container-fluid
+  / Breadcrumbs
+  .welcome
+    %nav{"aria-label" => "breadcrumb"}
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          %a{:href => tenant_catalogue_favourites_path}
+            Favourites
+            
+        -# - upper_segments = @segments[0..-2]
+
+        -# - path_trail = ""
+        -# - upper_segments.each do |us|
+        -#   - path_trail = "#{path_trail}/#{us}"
+        -#   %li.breadcrumb-item
+        -#     %a{:href => tenant_catalogue_browser_path(path: path_trail)}
+        -#       = us
+        -# %li.breadcrumb-item.active{"aria-current" => "page"}
+        -#   %i.fas.fa-fw.fa-folder-open.text-dark
+        -#   = @current_folder.present? ? @current_folder.name : "/"
+  #panels.row
+    -# #folder-btn
+    -#   %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+    -#     %i.fas.fa-plus-circle.text-primary
+    -#     %span.text-dark
+    -#       Folder Actions
+    -#   .dropdown-menu
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-upload
+    -#       High Speed Upload
+    -#     = link_to new_tenant_folder_path(parent_id: current_folder_id), class: 'dropdown-item mb-1', data: { remote: true, method: :get } do
+    -#       %i.fas.fa-fw.fa-folder-plus
+    -#       Create Folder
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-archive
+    -#       Archive Folder
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-file-import
+    -#       Restore Folder
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-envelope
+    -#       Send Folder
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-sticky-note
+    -#       Create Note
+    -#     %a.dropdown-item.mb-1{:href => "#"}
+    -#       %i.fas.fa-fw.fa-share-square
+    -#       Reqest Files
+    -# - if current_folder_id != 0
+    -#   #up-level
+    -#     %i.fas.fa-fw.fa-level-up-alt 
+    -#     - if @current_folder.root?
+    -#       %a{:href => tenant_catalogue_path}
+    -#         Up Folder     
+    -#     - else     
+    -#       %a{:href => tenant_catalogue_browser_path(path: @current_folder.parent.path)}
+    -#         Up Folder     
+    #folder-actions
+      %a.move{:href => "#", data: { remote: true }}
+        %i.fas.fa-fw.fa-file-export
+        Move
+      %a.email{:href => "#", data: { remote: true }}
+        %i.fas.fa-fw.fa-envelope
+        Email
+      %a{:href => "#", data: { remote: true }}
+        %i.fas.fa-fw.fa-archive
+        Archive
+      %a{:href => "#", data: { remote: true }}
+        %i.fas.fa-fw.fa-trash
+        Delete
+      %a{:href => "#", data: { remote: true }}
+        %i.fas.fa-fw.fa-film
+        Create Screening Room
+    #sort-options.ml-auto
+      %a
+        %i.fas.fa-fw.fa-bars.active
+      %a
+        %i.fas.fa-fw.fa-grip-horizontal
+      %a
+        %i.fas.fa-fw.fa-columns                 
+    .table
+      %table#tree.is-favourites.table.table-hover.table-striped.fancytree-fade-expander
+        %colgroup
+          %col{:width => "10px"}/
+          %col{:width => "10px"}/
+          %col{:width => "*"}/
+          %col{:width => "*"}/
+          %col{:width => "*"}/
+          %col{:width => "*"}/
+          %col{:width => "20px"}/
+          %col{:width => "20px"}/
+        %thead
+          %tr
+            %th            
+            %th
+            %th.folder-th.sort Name
+            %th.sort Size
+            %th.sort Updated
+            %th.sort Added By
+            %th Online
+            %th Archived
+        %tbody
+          %tr
+            %td.cell
+            %td.favourite
+            %td.folder
+            %td.cell
+            %td.cell
+            %td.cell
+            %td.text-center.text-success
+            %td.text-center
+    -# #notifications.w-100
+    -#   %span.mr-1 Send me notification when a file is:     
+    -#   .form-check.form-check-inline
+    -#     %input#inlineCheckbox1.form-check-input{:type => "checkbox", :value => "option1"}/
+    -#     %label.form-check-label{:for => "inlineCheckbox1"} Downloaded from this folder
+    -#   .form-check.form-check-inline
+    -#     %input#inlineCheckbox2.form-check-input{:type => "checkbox", :value => "option2"}/
+    -#     %label.form-check-label{:for => "inlineCheckbox2"} Uploaded to this folder
+    -#   %p.mt-3
+    -#     %a{:href => "#{tenant_settings_path}#notifications"} More Notification Settings  
+
+    -# .w-100
+    -#   = form_with model: @media_item, local: true, id: 'upload-box' do |form|
+    -#     %i.fas.fa-sign-in-alt.fa-rotate-90.fa-7x
+    -#     = form.hidden_field :folder_id
+    -#     = form.drag_and_drop_file_field :file
+    -#     = form.submit id: 'file-submit-button', class: 'd-none'
+
+    -# #upload-box
+    -#   %i.fas.fa-sign-in-alt.fa-rotate-90.fa-7x  
+
+    -#   %h3.mt-3
+    -#     %a{:href => "#"} Choose a File
+    -#     or drag it here. 
+    -#   %p.mt-5
+    -#     NOTE: For Files larger than 200MB, you should use our dedicated file
+    -#     %a{:href => "#"} upload agent 
+
+
+                    
+/ /.container-fluid

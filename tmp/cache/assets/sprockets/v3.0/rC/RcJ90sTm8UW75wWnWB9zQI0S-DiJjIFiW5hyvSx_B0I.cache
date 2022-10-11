@@ -1,0 +1,8 @@
+I"•(function() {
+  $(document).on('turbolinks:load', function() {
+    'use strict';
+    $('#flash .alert').delay(3000).fadeOut();
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,174 @@
+// Place all the styles related to the catalogue controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.favourite{
+  padding:8px 12px!important;
+  font-size:1.1rem;
+  vertical-align: middle!important;
+  label{
+    margin-bottom: 0;
+  }
+  input[type="checkbox"] + label:before,input[type="checkbox"] + label:after {
+    font-family: 'Font Awesome 5 Free';
+    display: inline-block;
+    color:$gray-600;
+     position: relative;
+
+  }
+  input[type="checkbox"]+label:before{
+   content: "\f005"; 
+   font-weight:100;
+  }
+  input[type="checkbox"]:checked+label:before {
+   content: "\f005";
+   font-weight:900;
+   color:#ffc107;     
+  }
+}
+
+#folder-btn {
+  width:100%;
+  background:$gray-100;
+  padding:.75rem;
+  a:hover{
+    text-decoration:none;
+    color:$black;
+  }
+  .dropdown-toggle::after{
+    display:none;
+  }  
+}
+#folder-actions{
+  padding:1rem;
+  display:none;
+  a{
+    margin-left:.5rem;
+    color:#343a40;
+    &:hover{
+      text-decoration:none;
+      color:$black;
+    }
+  }
+}
+.modal-body{
+  #move-tree{
+    .ui-fancytree{
+      border:none;
+      font-size:1rem;
+      .fancytree-icon{
+        font-size:1.5rem;
+      }
+      .fancytree-checkbox,.fancytree-expander{
+        margin-top:7px;
+      }
+    }
+  }
+}
+#notifications{
+  padding:0 .75rem;
+}
+#sort-options{
+  padding:1rem;
+  color:$gray-500;
+  .active{
+    color:$gray-700;
+  }
+}
+
+.table{
+  padding:0 .75rem;  
+  .folder{
+    color:$gray-700;
+    .fancytree-icon{
+      font-size:1.7rem;
+    }
+    .fancytree-title{
+      padding-top:8px;
+      outline:0!important;
+      a:hover{
+        text-decoration:none;
+      }
+    }
+  }
+  .folder-th{
+    padding-left:70px;
+  }
+  .cell{
+   color:$gray-600;
+   padding-top:19px;
+  }
+   .text-gray{
+    color:$gray-500;
+   }  
+  th{
+    color:$gray-600;
+  }
+  .sort{
+    cursor:pointer;
+    position:relative;
+    &:before{
+    right: 1em;
+    content: "\2191";
+    position: absolute;
+    bottom: 0.9em;
+    display: block;
+    opacity:0.3;          
+    }
+    &:after{
+    right: 0.5em;
+    content: "\2193";
+    position: absolute;
+    bottom: 0.9em;
+    display: block;
+    opacity: 0.3;          
+    }
+  }
+    .active{
+      &:after{
+        opacity:1;
+      }
+    }
+    .active.sortDSC{
+      &:before{
+        opacity:1;
+      }
+      &:after{
+        opacity:.3;
+      }
+    } 
+  .fancytree-ext-table.fancytree-container > tbody > tr.fancytree-active > td, table.fancytree-ext-table.fancytree-container > tbody > tr.fancytree-active > td, table.fancytree-ext-table.fancytree-container > tbody > tr.fancytree-active > td span.fancytree-title {
+    background-color:initial!important;
+    color:inherit!important;
+  }
+  .online{
+    color:#419400;
+  }
+  .partial{
+    color:#fdc62e;
+  }
+  .offline{
+    color:#c8c8c8;
+  }          
+}
+#up-level{
+  padding:1rem;
+  a:hover{
+    text-decoration:none;
+  }
+}
+#upload-box{
+  width:98%;
+  border:3px dashed $gray-300;
+  // padding:2rem 2rem 1rem;
+  text-align:center;
+  // margin:2rem .75rem;
+  i{
+    color:$gray-300;
+  }
+
+  label.asdndzone {
+    padding:2rem 2rem 1rem;
+    margin:2rem .75rem;
+  }
+}

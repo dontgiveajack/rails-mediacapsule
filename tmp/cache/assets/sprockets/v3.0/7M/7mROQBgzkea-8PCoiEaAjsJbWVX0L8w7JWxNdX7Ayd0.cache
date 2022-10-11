@@ -1,0 +1,97 @@
+I"(function() {
+  $(function() {
+    if ($('#tree').length > 0) {
+      $('#tree').fancytree({
+        extensions: ['glyph', 'table', 'dnd5'],
+        renderNode: function(event, data) {},
+        escapeTitles: false,
+        autoScroll: true,
+        selectMode: 2,
+        checkbox: true,
+        dnd5: {
+          preventVoidMoves: true,
+          preventRecursiveMoves: true,
+          autoExpandMS: 400,
+          dragStart: function(node, data) {
+            return true;
+          },
+          dragEnter: function(node, data) {
+            return true;
+          },
+          dragDrop: function(node, data) {
+            return data.otherNode.moveTo(node, data.hitMode);
+          }
+        },
+        glyph: {
+          preset: 'awesome5',
+          map: {
+            folder: 'fas fa-folder',
+            folderOpen: 'fas fa-folder-open'
+          }
+        },
+        table: {
+          checkboxColumnIdx: 0,
+          nodeColumnIdx: 2
+        },
+        init: function(event, data) {
+          var comparer, getCellValue, node;
+          node = $('#tree').fancytree('getRootNode');
+          comparer = function(index) {
+            return function(a, b) {
+              var valA, valB;
+              valA = getCellValue(a, index);
+              valB = getCellValue(b, index);
+              if ($.isNumeric(valA) && $.isNumeric(valB)) {
+                return valA - valB;
+              } else {
+                return valA.toString().localeCompare(valB);
+              }
+            };
+          };
+          getCellValue = function(row, index) {
+            return $(row).children('td').eq(index).text();
+          };
+          return $('.sort').click(function() {
+            var i, rows, table;
+            $('th').removeClass('active');
+            table = $(this).parents('table').eq(0);
+            rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+            $(this).toggleClass('active');
+            $(this).toggleClass('sortDSC');
+            this.asc = !this.asc;
+            if (!this.asc) {
+              rows = rows.reverse();
+            }
+            i = 0;
+            while (i < rows.length) {
+              table.append(rows[i]);
+              i++;
+            }
+          });
+        },
+        select: function(event, data) {
+          var selNodes;
+          selNodes = data.tree.getSelectedNodes();
+          if (selNodes.length > 0) {
+            $('#folder-actions').addClass('d-inline-block');
+          } else {
+            $('#folder-actions').removeClass('d-inline-block');
+          }
+        },
+        renderColumns: function(event, data) {
+          var $tdList, node;
+          node = data.node;
+          $tdList = $(node.tr).find('>td');
+          $tdList.eq(1).html('<input class="star" type="checkbox"/><label for="star"></label>');
+          $tdList.eq(3).text(node.data.size);
+          $tdList.eq(4).text(node.data.updated);
+          $tdList.eq(5).text(node.data.addedBy);
+          $tdList.eq(6).html(node.data.online);
+          $tdList.eq(7).html(node.data.archived);
+        }
+      });
+    }
+  });
+
+}).call(this);
+:ET

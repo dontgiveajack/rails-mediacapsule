@@ -1,0 +1,209 @@
+#main-nav{
+  border-bottom:3px solid $primary;
+  input {
+    outline: none;
+  }
+  input[type=search] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+    font-family: inherit;
+    font-size: .8rem;
+  }
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button {
+    display: none; 
+  }
+
+
+  input[type=search] {
+    background: #ededed image-url("search-icon.png") no-repeat 9px center;
+    border: solid 1px #ccc;
+    padding: 0 5px 0 32px;
+    width: 55px;
+    border-radius: 10em;
+    transition: all .5s;
+  }
+  input[type=search]:focus {
+    width: 130px;
+    background-color: #fff;
+    border-color: #66CC75;
+    
+    -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+    -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+    box-shadow: 0 0 5px rgba(109,207,246,.5);
+  }
+
+
+  input:-moz-placeholder {
+    color: #999;
+  }
+  input::-webkit-input-placeholder {
+    color: #999;
+  }
+
+  /* Demo 2 */
+  #demo-2 input[type=search] {
+    width: 15px;
+    padding-left: 10px;
+    color: transparent;
+    cursor: pointer;
+  }
+  #demo-2 input[type=search]:hover {
+    background-color: #fff;
+  }
+  #demo-2 input[type=search]:focus {
+    width: 130px;
+    padding-left: 32px;
+    color: #000;
+    background-color: #fff;
+    cursor: auto;
+  }
+  #demo-2 input:-moz-placeholder {
+    color: transparent;
+  }
+  #demo-2 input::-webkit-input-placeholder {
+    color: transparent;
+  }  
+}
+
+.navbar-nav {
+
+  .form-inline .input-group {
+    width: 100%;
+  }
+
+  .nav-item {
+    &.active {
+      .nav-link {
+        color: $gray-800;
+
+      }
+    }
+    &.dropdown {
+      .dropdown-toggle {
+        &::after {
+          width: 1rem;
+          text-align: center;
+          float: right;
+          vertical-align: 0;
+          border: 0;
+          font-weight: 900;
+          content: '\f105';
+          font-family: 'Font Awesome 5 Free';
+        }
+      }
+      &.show {
+        .dropdown-toggle::after {
+          content: '\f107';
+        }
+      }
+      &.no-arrow {
+        .dropdown-toggle::after {
+          display: none;
+        }
+      }
+    }
+    .nav-link {
+      font-size:1.2rem;
+      &:focus {
+        // remove outline for Safari and Firefox
+        outline: none;
+      }
+      .badge-sup {
+        position: absolute;
+        margin-left: 0.75rem;
+        top: 0.3rem;
+        right:0;
+        font-weight: 400;
+        font-size: 0.6rem!important;
+      }
+      .badge{
+        font-size:.7rem;
+      }
+    }
+  }
+
+  @media(min-width: 768px) {
+
+    .form-inline .input-group {
+      width: auto;
+    }
+
+  }
+
+}
+
+.sidebar {
+  width: $sidebar-collapsed-width !important;
+  min-height: calc(100vh - #{$navbar-base-height});
+  @include sidebar-icons;
+  .nav-item {
+    .nav-link {
+      color: fade-out($black, 0.5);
+      &:active,
+      &:focus,
+      &:hover {
+        color: fade-out($black, 0.25);
+      }
+    }
+  }
+  &.toggled {
+    width: 0 !important;
+    overflow: hidden;
+    .badge{
+      position:absolute;
+      top:0;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: $sidebar-base-width !important;
+
+    .nav-item {
+      .nav-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 1rem;
+        width: $sidebar-base-width;
+        span {
+          font-size: 1rem;
+          display: inline;
+        }
+        i{
+          padding-right:3px;
+        }
+      }
+      .dropdown-menu {
+        position: static !important;
+        margin: 0 1rem;
+        // Position fix for Firefox
+        top: 0;
+
+          .dropdown-item{
+            padding:.25rem .5rem;
+          }
+
+      }
+      &.dropdown .dropdown-toggle::after {
+        display: block;
+      }
+    }
+    &.toggled {
+      overflow: visible;
+      width: $sidebar-collapsed-width !important;
+      @include sidebar-icons;
+    }
+  }
+}
+
+// Fixed Nav Option
+// Add .fixed-top class to top .navbar-nav and to .sidebar - add .fixed-nav to body
+
+.sidebar.fixed-top {
+  top: $navbar-base-height;
+  height: calc(100vh - #{$navbar-base-height});
+  overflow-y: auto;
+}

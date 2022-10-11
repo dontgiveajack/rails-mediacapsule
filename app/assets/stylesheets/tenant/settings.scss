@@ -1,0 +1,15 @@
+// Place all the styles related to the tenant/settings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.heading{
+	margin:2rem 0;
+}
+
+.settings{
+	width:100%;
+	.tab-content{
+		max-width:780px;
+	}
+}

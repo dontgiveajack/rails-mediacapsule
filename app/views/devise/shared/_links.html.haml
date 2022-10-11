@@ -1,0 +1,28 @@
+- extra_class = 'mt-3'
+- num_links = 0
+.text-center
+  - if controller_name != 'sessions'
+    - num_links = num_links + 1
+    = link_to "Log in", new_session_path(resource_name), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
+  - if devise_mapping.registerable? && controller_name != 'registrations'
+    - num_links = num_links + 1
+    = link_to "Sign up", new_registration_url(resource_name, subdomain: 'www'), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
+  - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+    - num_links = num_links + 1
+    = link_to "Forgot your password?", new_password_path(resource_name), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
+  - if devise_mapping.confirmable? && controller_name != 'confirmations'
+    - num_links = num_links + 1
+    = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
+  - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+    - num_links = num_links + 1
+    = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
+  - if devise_mapping.omniauthable?
+    - resource_class.omniauth_providers.each do |provider|
+      - num_links = num_links + 1
+      = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: (num_links == 1 ? 'd-block small mt-3' : 'd-block small')
+    
